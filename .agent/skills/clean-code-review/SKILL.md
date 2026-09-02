@@ -1,6 +1,6 @@
 ---
 name: clean-code-review
-description: Review an existing code change, module, service, or repository area for Clean Code violations, maintainability risks, unnecessary complexity, duplication, weak naming, poor responsibility boundaries, testing weaknesses, and refactoring opportunities. Use together with .agent/rules/clean-code.md and the repository-specific rules.
+description: Review an existing code change, module, service, or repository area for Clean Code violations, maintainability risks, unnecessary complexity, duplication, weak naming, poor responsibility boundaries, product architecture fit, testing weaknesses, and refactoring opportunities. Use together with .agent/rules/clean-code.md, .agent/rules/generic-product-mindset.md, and the repository-specific rules.
 ---
 
 # Clean Code Review Skill
@@ -13,6 +13,16 @@ The review must be grounded in the actual repository code and existing tests.
 
 Do not review from isolated assumptions when relevant callers, types, tests, or neighboring modules are available.
 
+Review with a generic product development mindset: identify the product capability, infer the architecture from the product's workflows and rules, and then evaluate whether the code expresses that architecture cleanly.
+
+Clean Code remains mandatory even when the code is being shaped by product development priorities.
+
+Account for delivery speed: configurable behavior, UI-based configuration, feature flags, admin settings, CMS-driven content, and UI-owned presentation rules may be the right product decision when they are clear, validated, reversible, and not replacing required authoritative enforcement.
+
+Do not over-engineer the codebase when a simple, readable, correct solution satisfies the product need.
+
+Evaluate product risk, source of truth, configuration governance, feature flag lifecycle, delivery stage, operational readiness, and whether progressive architecture is being used instead of premature platform design.
+
 ---
 
 # 1. Preparation
@@ -20,14 +30,15 @@ Do not review from isolated assumptions when relevant callers, types, tests, or 
 Before reviewing:
 
 1. Read `.agent/rules/clean-code.md`.
-2. Read any relevant repository rule files:
+2. Read `.agent/rules/generic-product-mindset.md`.
+3. Read any relevant repository rule files:
    - `.agent/rules/backend.md`
    - `.agent/rules/frontend.md`
    - `.agent/rules/database.md`
    - `.agent/rules/testing.md`
    - `.agent/rules/security.md`
-3. Inspect the target code.
-4. Inspect directly related:
+4. Inspect the target code.
+5. Inspect directly related:
    - callers
    - dependencies
    - DTOs/types
@@ -35,7 +46,7 @@ Before reviewing:
    - tests
    - configuration
    - persistence code
-5. Identify the feature/domain responsibility before judging structure.
+6. Identify the product capability, workflow, business rules, domain responsibility, delivery-speed constraint, delivery stage, product risk, and source of truth before judging structure.
 
 ---
 
@@ -133,6 +144,34 @@ Check relevant security concerns using `.agent/rules/security.md`.
 
 Do not claim a security issue without a plausible exploit/failure path.
 
+## 2.9 Product Architecture Fit
+
+Check whether the code structure follows `.agent/rules/generic-product-mindset.md`.
+
+Look for:
+
+- architecture chosen from product behavior instead of generic patterns
+- architecture scaled to product risk
+- delivery stage recognized as experiment, MVP, production feature, or platform capability
+- product capability boundaries that are easy to find
+- business rules named in product/domain language
+- one clear source of truth for meaningful product rules and configuration
+- workflows and state transitions located deliberately
+- infrastructure dependencies isolated where useful
+- likely product changes localized to coherent modules
+- simple direct solutions preferred over unnecessary architecture
+- configurable behavior used appropriately for speed and reversibility
+- UI-based configuration used deliberately for fast-changing product experience details
+- configuration with clear ownership, defaults, validation, and rollback behavior
+- feature flags with owner, default state, rollout scope, removal condition, cleanup path, and monitoring where needed
+- UI-owned rules limited to presentation, guidance, copy, layout, or non-authoritative workflow behavior
+- authoritative enforcement kept outside the UI when correctness, security, money, permissions, privacy, or data integrity require it
+- operational readiness appropriate to product risk
+- lightweight decision records for non-obvious product or architecture tradeoffs
+- progressive architecture that evolves from evidence rather than speculation
+- no generic dumping grounds for product behavior
+- Clean Code practices preserved while implementing product-driven decisions
+
 ---
 
 # 3. Severity Classification
@@ -199,6 +238,8 @@ What is wrong.
 **Why it matters**
 Concrete maintainability/correctness/security impact.
 
+When relevant, connect the impact to the product workflow, business rule, architecture boundary, or likely future product change.
+
 **Recommended change**
 Specific improvement.
 
@@ -257,6 +298,7 @@ Always prefer the design that is:
 
 - correct
 - secure
+- aligned with product intent
 - explicit
 - readable
 - maintainable
@@ -270,10 +312,18 @@ Always prefer the design that is:
 Before finishing a Clean Code review, confirm:
 
 - [ ] Existing architecture was inspected.
+- [ ] Product capability, workflow, and business rules were identified.
+- [ ] Product risk, delivery stage, and source of truth were identified.
+- [ ] Delivery-speed constraints and configurable alternatives were considered.
 - [ ] Related tests were inspected.
 - [ ] Findings are tied to actual code.
 - [ ] Severity is justified.
 - [ ] Recommendations preserve behavior unless change was requested.
 - [ ] Unnecessary abstractions were not proposed.
+- [ ] Product architecture recommendations still preserve Clean Code.
+- [ ] Recommendations do not over-engineer a simple product need.
+- [ ] Configuration and feature flag governance was considered where applicable.
+- [ ] Operational readiness was considered according to product risk.
+- [ ] Progressive architecture was preferred over premature platform design.
 - [ ] Important security/testing implications were considered.
 - [ ] Refactoring recommendations are ordered safely.
