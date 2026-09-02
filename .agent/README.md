@@ -9,6 +9,7 @@ This package contains reusable coding rules and one dedicated Clean Code review 
 +-- rules/
 |   +-- clean-code.md
 |   +-- generic-product-mindset.md
+|   +-- project-specific.md
 |   +-- security.md
 |   +-- backend.md
 |   +-- frontend.md
@@ -27,6 +28,7 @@ Use files under `.agent/rules/` as persistent development constraints.
 
 - `clean-code.md` - universal Clean Code baseline.
 - `generic-product-mindset.md` - product-minded architecture and development baseline.
+- `project-specific.md` - product/company/repository-specific rules that adapt the generic baselines.
 - `security.md` - secure coding baseline.
 - `backend.md` - API/service/worker/backend conventions.
 - `frontend.md` - frontend/UI/component conventions.
@@ -54,11 +56,50 @@ This mindset requires the agent to reason from product intent to architecture to
 
 Product mindset must not weaken Clean Code, testing, security, correctness, or maintainability expectations.
 
+### Project-specific rules
+
+Use `.agent/rules/project-specific.md` for concrete rules that must be followed when developing in this codebase.
+
+Current project-specific requirements include:
+
+- always use i18n for user-facing text instead of hardcoded strings
+- use React and Tailwind concepts cleanly with readable pages, components, hooks, helpers, and responsive screens
+- use Ant Design components consistently, but prefer project components over dumping large raw Ant Design trees directly into pages
+- use Bootstrap Icons where icons are needed
+- keep frontend files separated by responsibility where it improves maintainability
+- keep functions and pages maintainable in size
+- keep naming and i18n label/key casing consistent
+- follow the backend monorepo structure
+- use NestJS concepts and conventions for backend development
+- understand and reuse customized NestJS monorepo template features correctly
+- use TypeORM where persistence work requires it or where existing project patterns expect it
+- prefer TypeORM `synchronize: false` and create migrations for schema changes
+- keep API contracts explicit with DTOs, validation, and consistent response patterns
+- keep NestJS layer responsibilities clear: controllers, services, repositories/query services, DTOs, guards, pipes, interceptors, and filters
+- prefer the project's `.query`, `filterAnd`, and `filterOr` conventions for query filtering
+- use SQL/PostgreSQL deliberately for constraints, indexes, migrations, transactions, and queries
+- keep Docker/runtime configuration aligned with project services and environment needs
+- follow project error-handling/logging patterns and avoid leaking low-level errors
+- keep secrets and environment-specific values in environment/config mechanisms
+- make clearly variable values configurable instead of hardcoded, using env files/config where applicable
+- keep frontend API calls in services/hooks/client modules rather than scattered in pages
+- use Ant Design Form/table/list patterns consistently with i18n labels and messages
+- follow the existing state management/query/cache pattern and avoid new state libraries without strong reason
+- refactor generated/scaffolded code before it becomes production code
+- avoid unnecessary backward-compatibility fallbacks unless compatibility is an explicit requirement
+- simplify repeated logic inside the same block when it improves clarity or performance
+- consider time complexity and space complexity pragmatically for hot, reused, data-heavy, or expensive logic, not merely because the system has many users
+- keep product/business logic in the correct UI, backend, domain, or persistence layer
+- use UI-based configuration only where it is safe and product-appropriate
+- avoid over-engineering simple solutions
+
+Project-specific rules should guide implementation and review before generic stylistic preferences, unless they would weaken correctness, security, data integrity, legal/compliance requirements, or required product behavior.
+
 ### Skill
 
 Use `.agent/skills/clean-code-review/SKILL.md` for an explicit review/refactoring workflow.
 
-The skill assumes the relevant rule files are also available, especially `clean-code.md` and `generic-product-mindset.md`.
+The skill assumes the relevant rule files are also available, especially `clean-code.md`, `generic-product-mindset.md`, and `project-specific.md`.
 
 ## Precedence
 

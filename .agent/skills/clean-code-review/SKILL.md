@@ -1,6 +1,6 @@
 ---
 name: clean-code-review
-description: Review an existing code change, module, service, or repository area for Clean Code violations, maintainability risks, unnecessary complexity, duplication, weak naming, poor responsibility boundaries, product architecture fit, testing weaknesses, and refactoring opportunities. Use together with .agent/rules/clean-code.md, .agent/rules/generic-product-mindset.md, and the repository-specific rules.
+description: Review an existing code change, module, service, or repository area for Clean Code violations, maintainability risks, unnecessary complexity, duplication, weak naming, poor responsibility boundaries, product architecture fit, project-specific rule fit, testing weaknesses, and refactoring opportunities. Use together with .agent/rules/clean-code.md, .agent/rules/generic-product-mindset.md, .agent/rules/project-specific.md, and the repository-specific rules.
 ---
 
 # Clean Code Review Skill
@@ -23,6 +23,10 @@ Do not over-engineer the codebase when a simple, readable, correct solution sati
 
 Evaluate product risk, source of truth, configuration governance, feature flag lifecycle, delivery stage, operational readiness, and whether progressive architecture is being used instead of premature platform design.
 
+Apply project-specific rules before generic preferences when they define the product, company, repository, team, architecture, configuration, testing, security, or operational expectations.
+
+For this project, explicitly check that user-facing text uses i18n, frontend code follows the project's React and Tailwind structure, Ant Design and Bootstrap Icons are used consistently, backend code follows the customized NestJS monorepo structure, TypeORM is used where persistence work requires it or existing project patterns expect it, TypeORM `synchronize: false` is preferred, schema changes use migrations, `.query` filtering uses established `filterAnd` and `filterOr` behavior, SQL/PostgreSQL usage is deliberate, and Docker/runtime configuration remains consistent.
+
 ---
 
 # 1. Preparation
@@ -31,14 +35,15 @@ Before reviewing:
 
 1. Read `.agent/rules/clean-code.md`.
 2. Read `.agent/rules/generic-product-mindset.md`.
-3. Read any relevant repository rule files:
+3. Read `.agent/rules/project-specific.md`.
+4. Read any relevant repository rule files:
    - `.agent/rules/backend.md`
    - `.agent/rules/frontend.md`
    - `.agent/rules/database.md`
    - `.agent/rules/testing.md`
    - `.agent/rules/security.md`
-4. Inspect the target code.
-5. Inspect directly related:
+5. Inspect the target code.
+6. Inspect directly related:
    - callers
    - dependencies
    - DTOs/types
@@ -46,7 +51,7 @@ Before reviewing:
    - tests
    - configuration
    - persistence code
-6. Identify the product capability, workflow, business rules, domain responsibility, delivery-speed constraint, delivery stage, product risk, and source of truth before judging structure.
+7. Identify the product capability, workflow, business rules, domain responsibility, delivery-speed constraint, delivery stage, product risk, source of truth, and project-specific constraints before judging structure.
 
 ---
 
@@ -171,6 +176,50 @@ Look for:
 - progressive architecture that evolves from evidence rather than speculation
 - no generic dumping grounds for product behavior
 - Clean Code practices preserved while implementing product-driven decisions
+
+## 2.10 Project-Specific Rule Fit
+
+Check whether the code follows `.agent/rules/project-specific.md`.
+
+Look for:
+
+- existing project architecture conventions followed
+- user-facing text routed through i18n instead of hardcoded strings
+- frontend pages kept readable through meaningful components, hooks, helpers, and configuration
+- Ant Design components used consistently without dumping large raw UI trees directly into pages
+- Tailwind used consistently for layout, spacing, responsiveness, and small styling needs
+- Bootstrap Icons used consistently where icons are needed
+- React hooks kept in hooks when reusable or stateful logic needs separation
+- helper functions kept in helpers when pure reusable logic needs separation
+- responsive behavior preserved for frontend screens
+- naming case and i18n label/key casing kept consistent
+- backend changes placed correctly within the monorepo structure
+- backend package/module boundaries kept clean
+- NestJS modules, controllers, providers, services, guards, pipes, interceptors, filters, and decorators used consistently where applicable
+- customized NestJS monorepo template features understood and reused instead of reimplemented manually
+- API contracts use DTOs, validation, serialization, and consistent response patterns where applicable
+- NestJS layer responsibilities kept clear
+- project error-handling and logging patterns followed without leaking low-level errors
+- secrets, environment-specific values, and clearly variable settings kept in environment/config mechanisms instead of hardcoded literals
+- TypeORM used consistently for entities, repositories, migrations, transactions, and ORM-owned queries where necessary
+- TypeORM `synchronize: false` preferred and schema changes implemented through migrations
+- `.query`, `filterAnd`, and `filterOr` conventions used for query filtering where applicable
+- SQL/PostgreSQL constraints, indexes, transactions, migrations, and raw queries handled safely and consistently
+- Docker/runtime configuration kept reproducible and aligned with project services where changed
+- frontend API calls kept in services, hooks, clients, or existing data-access abstractions rather than scattered in pages
+- Ant Design forms, tables, and lists follow project patterns with i18n labels/messages
+- state management follows existing local/global/query/cache patterns without unnecessary new libraries
+- generated or scaffolded code refactored before becoming production code
+- unnecessary backward-compatibility fallbacks avoided unless explicitly required
+- repeated logic inside the same block simplified where clarity or performance improves
+- time complexity and space complexity considered pragmatically for hot, reused, data-heavy, or expensive logic, not merely from total system user count
+- product behavior placed in the expected module, layer, or capability
+- project source-of-truth rules respected
+- project UI-based configuration rules respected
+- project configuration and feature flag governance followed
+- project testing expectations satisfied
+- project security, privacy, data, and operational rules considered
+- no generic preference overriding an explicit project rule without justification
 
 ---
 
@@ -314,6 +363,19 @@ Before finishing a Clean Code review, confirm:
 - [ ] Existing architecture was inspected.
 - [ ] Product capability, workflow, and business rules were identified.
 - [ ] Product risk, delivery stage, and source of truth were identified.
+- [ ] Project-specific constraints were identified and applied.
+- [ ] User-facing text uses i18n rather than hardcoded strings.
+- [ ] Frontend pages, components, hooks, helpers, React, Tailwind, Ant Design usage, Bootstrap Icons, responsiveness, and casing conventions were reviewed where applicable.
+- [ ] Backend changes follow the monorepo structure.
+- [ ] Backend changes follow NestJS conventions where applicable.
+- [ ] Customized NestJS monorepo template features were understood and applied where applicable.
+- [ ] API contracts, NestJS layer responsibilities, error handling, logging, environment/secrets usage, and configurable values were reviewed where applicable.
+- [ ] TypeORM usage follows project persistence conventions where applicable.
+- [ ] TypeORM `synchronize: false` and migration-based schema changes were reviewed where applicable.
+- [ ] `.query`, `filterAnd`, and `filterOr` query behavior was reviewed where applicable.
+- [ ] SQL/PostgreSQL usage and Docker/runtime changes were reviewed where applicable.
+- [ ] Frontend API integration, forms, tables/lists, state management, and generated/scaffolded code were reviewed where applicable.
+- [ ] Unnecessary compatibility fallbacks, repeated logic, and practical time/space complexity risks were reviewed.
 - [ ] Delivery-speed constraints and configurable alternatives were considered.
 - [ ] Related tests were inspected.
 - [ ] Findings are tied to actual code.
@@ -325,5 +387,6 @@ Before finishing a Clean Code review, confirm:
 - [ ] Configuration and feature flag governance was considered where applicable.
 - [ ] Operational readiness was considered according to product risk.
 - [ ] Progressive architecture was preferred over premature platform design.
+- [ ] Project-specific rules were not bypassed silently.
 - [ ] Important security/testing implications were considered.
 - [ ] Refactoring recommendations are ordered safely.
