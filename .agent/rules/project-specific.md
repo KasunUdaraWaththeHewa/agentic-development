@@ -29,7 +29,24 @@ Do not create a new abstraction if an existing project convention already solves
 
 ---
 
-# 2. Always Use i18n for User-Facing Text
+# 2. Formatting With Prettier
+
+Use Prettier for code formatting.
+
+Follow the project's existing Prettier configuration rather than personal formatting preferences.
+
+Before finishing code changes:
+
+- format changed files with the project's Prettier command or formatter integration
+- do not manually fight Prettier formatting
+- do not introduce formatting-only churn in unrelated files
+- keep formatting consistent across frontend, backend, tests, configuration, and markdown where the project applies Prettier
+
+If Prettier and readability appear to conflict, prefer restructuring the code so Prettier output remains readable instead of overriding formatting manually.
+
+---
+
+# 3. Always Use i18n for User-Facing Text
 
 Do not hardcode user-facing text directly in UI components, pages, validation messages, notifications, emails, dialogs, buttons, labels, placeholders, empty states, errors, success messages, or navigation.
 
@@ -56,7 +73,7 @@ When reviewing code, treat hardcoded user-facing text as a project-specific issu
 
 ---
 
-# 3. Backend Must Follow the Monorepo Concept
+# 4. Backend Must Follow the Monorepo Concept
 
 Backend development must respect the repository's monorepo structure.
 
@@ -96,7 +113,7 @@ Do not force generic NestJS examples into this repository when the customized mo
 
 ---
 
-# 4. Use TypeORM Where Necessary
+# 5. Use TypeORM Where Necessary
 
 Use TypeORM for database persistence where the project uses TypeORM or where persistence work requires ORM-managed entities, repositories, relations, transactions, migrations, or query builders.
 
@@ -162,7 +179,7 @@ Do not invent a separate filtering syntax, parser, DTO shape, or query abstracti
 
 ---
 
-# 5. API Contracts and NestJS Layer Responsibilities
+# 6. API Contracts and NestJS Layer Responsibilities
 
 Keep API contracts explicit, typed, and consistent.
 
@@ -196,7 +213,7 @@ Do not bypass existing response, exception, validation, or serialization convent
 
 ---
 
-# 6. Error Handling and Logging
+# 7. Error Handling and Logging
 
 Follow the project's existing exception, response, and logging patterns.
 
@@ -214,7 +231,7 @@ Catch errors only when you can recover, translate, add useful context, clean up,
 
 ---
 
-# 7. Environment and Secrets
+# 8. Environment and Secrets
 
 Do not hardcode secrets, credentials, tokens, private keys, database URLs, service URLs, or environment-specific values in code.
 
@@ -269,7 +286,7 @@ Do not hide required environment configuration inside code paths that fail only 
 
 ---
 
-# 8. Docker and Runtime Environment
+# 9. Docker and Runtime Environment
 
 Use Docker concepts consistently for local development, service orchestration, and runtime dependencies where the project provides Docker support.
 
@@ -286,7 +303,7 @@ Do not add Docker complexity for purely local code changes that do not affect ru
 
 ---
 
-# 9. Product and Business Logic Placement
+# 10. Product and Business Logic Placement
 
 Place product/business logic where the existing codebase expects it.
 
@@ -316,7 +333,7 @@ Do not duplicate authoritative business rules between UI and backend unless one 
 
 ---
 
-# 10. UI-Based Configuration
+# 11. UI-Based Configuration
 
 UI-based configuration is allowed when it speeds delivery and the behavior is mainly product experience, not authoritative enforcement.
 
@@ -347,7 +364,7 @@ Do not turn UI configuration files into dumping grounds for unrelated product be
 
 ---
 
-# 11. Frontend Development Rules
+# 12. Frontend Development Rules
 
 Frontend code must be easy to read, easy to change, responsive, and consistent with the project's React patterns.
 
@@ -424,7 +441,7 @@ When rules overlap, choose the balanced solution that best preserves correctness
 
 ---
 
-# 12. Frontend API Integration
+# 13. Frontend API Integration
 
 Keep frontend API calls in service/client modules, hooks, or existing data-access abstractions.
 
@@ -442,7 +459,7 @@ Keep API error handling readable and i18n-ready for user-facing messages.
 
 ---
 
-# 13. Forms
+# 14. Forms
 
 Use Ant Design Form patterns consistently where forms are needed.
 
@@ -458,7 +475,7 @@ Keep form field names, DTO fields, and i18n keys consistent with project casing 
 
 ---
 
-# 14. Tables and Lists
+# 15. Tables and Lists
 
 Use shared table/list patterns where the project has them.
 
@@ -476,7 +493,7 @@ Do not create a new table abstraction unless existing Ant Design/project table p
 
 ---
 
-# 15. State Management
+# 16. State Management
 
 Use local React state for local UI-only state.
 
@@ -492,7 +509,7 @@ Avoid duplicating server state in local state unless the UI needs an editable dr
 
 ---
 
-# 16. Generated and Scaffolded Code
+# 17. Generated and Scaffolded Code
 
 Do not manually edit generated files unless the project explicitly expects manual edits for that generated output.
 
@@ -504,7 +521,7 @@ Do not leave placeholder names, sample data, dead routes, unused providers, unus
 
 ---
 
-# 17. Configuration and Feature Flags
+# 18. Configuration and Feature Flags
 
 Configuration and feature flags must have clear ownership and lifecycle.
 
@@ -525,7 +542,7 @@ Use code when the behavior is complex, security-sensitive, or protects money, pe
 
 ---
 
-# 18. Keep Solutions Simple
+# 19. Keep Solutions Simple
 
 Do not over-engineer this codebase.
 
@@ -588,7 +605,7 @@ Do not introduce complex optimization unless there is practical evidence, measur
 
 ---
 
-# 19. Testing Expectations
+# 20. Testing Expectations
 
 Tests should follow the existing project testing style and live in the expected app/package/module location.
 
@@ -617,11 +634,12 @@ If full automated coverage is not practical, document the reason and provide foc
 
 ---
 
-# 20. Review Checklist
+# 21. Review Checklist
 
 Before implementation:
 
 - [ ] Existing codebase structure and similar implementations were inspected.
+- [ ] Formatting will follow the project's Prettier configuration.
 - [ ] User-facing text will use i18n instead of hardcoded strings.
 - [ ] Frontend changes will use React, Tailwind, Ant Design, Bootstrap Icons, components, hooks, and helpers according to project conventions.
 - [ ] Pages will remain readable and will be split only when doing so improves maintainability.
@@ -647,6 +665,7 @@ Before implementation:
 Before finishing:
 
 - [ ] No hardcoded user-facing text was introduced.
+- [ ] Changed files were formatted with Prettier where applicable.
 - [ ] Translation keys/resources were added or updated where needed.
 - [ ] Frontend pages, components, hooks, helpers, and configuration are separated by responsibility where useful.
 - [ ] Ant Design components are not dumped directly into long unreadable pages.

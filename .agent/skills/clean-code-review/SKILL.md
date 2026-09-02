@@ -25,7 +25,7 @@ Evaluate product risk, source of truth, configuration governance, feature flag l
 
 Apply project-specific rules before generic preferences when they define the product, company, repository, team, architecture, configuration, testing, security, or operational expectations.
 
-For this project, explicitly check that user-facing text uses i18n, frontend code follows the project's React and Tailwind structure, Ant Design and Bootstrap Icons are used consistently, backend code follows the customized NestJS monorepo structure, TypeORM is used where persistence work requires it or existing project patterns expect it, TypeORM `synchronize: false` is preferred, schema changes use migrations, `.query` filtering uses established `filterAnd` and `filterOr` behavior, SQL/PostgreSQL usage is deliberate, and Docker/runtime configuration remains consistent.
+For this project, explicitly check that formatting follows the project's Prettier configuration, user-facing text uses i18n, frontend code follows the project's React and Tailwind structure, Ant Design and Bootstrap Icons are used consistently, backend code follows the customized NestJS monorepo structure, TypeORM is used where persistence work requires it or existing project patterns expect it, TypeORM `synchronize: false` is preferred, schema changes use migrations, `.query` filtering uses established `filterAnd` and `filterOr` behavior, SQL/PostgreSQL usage is deliberate, and Docker/runtime configuration remains consistent.
 
 ---
 
@@ -184,6 +184,7 @@ Check whether the code follows `.agent/rules/project-specific.md`.
 Look for:
 
 - existing project architecture conventions followed
+- formatting follows the project's Prettier configuration without unrelated formatting churn
 - user-facing text routed through i18n instead of hardcoded strings
 - frontend pages kept readable through meaningful components, hooks, helpers, and configuration
 - Ant Design components used consistently without dumping large raw UI trees directly into pages
@@ -364,6 +365,7 @@ Before finishing a Clean Code review, confirm:
 - [ ] Product capability, workflow, and business rules were identified.
 - [ ] Product risk, delivery stage, and source of truth were identified.
 - [ ] Project-specific constraints were identified and applied.
+- [ ] Formatting follows the project's Prettier configuration.
 - [ ] User-facing text uses i18n rather than hardcoded strings.
 - [ ] Frontend pages, components, hooks, helpers, React, Tailwind, Ant Design usage, Bootstrap Icons, responsiveness, and casing conventions were reviewed where applicable.
 - [ ] Backend changes follow the monorepo structure.

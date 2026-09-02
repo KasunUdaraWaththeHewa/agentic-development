@@ -62,6 +62,7 @@ Use `.agent/rules/project-specific.md` for concrete rules that must be followed 
 
 Current project-specific requirements include:
 
+- format code with the project's Prettier configuration
 - always use i18n for user-facing text instead of hardcoded strings
 - use React and Tailwind concepts cleanly with readable pages, components, hooks, helpers, and responsive screens
 - use Ant Design components consistently, but prefer project components over dumping large raw Ant Design trees directly into pages
