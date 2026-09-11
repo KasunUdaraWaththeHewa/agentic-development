@@ -10,6 +10,7 @@ This package contains reusable coding rules and one dedicated Clean Code review 
 |   +-- clean-code.md
 |   +-- generic-product-mindset.md
 |   +-- project-specific.md
+|  +-- project-development.md
 |   +-- security.md
 |   +-- backend.md
 |   +-- frontend.md
@@ -29,6 +30,7 @@ Use files under `.agent/rules/` as persistent development constraints.
 - `clean-code.md` - universal Clean Code baseline.
 - `generic-product-mindset.md` - product-minded architecture and development baseline.
 - `project-specific.md` - product/company/repository-specific rules that adapt the generic baselines.
+- `project-development.md` - project-wide development conventions for implementation and review.
 - `security.md` - secure coding baseline.
 - `backend.md` - API/service/worker/backend conventions.
 - `frontend.md` - frontend/UI/component conventions.
@@ -100,7 +102,7 @@ Project-specific rules should guide implementation and review before generic sty
 
 Use `.agent/skills/clean-code-review/SKILL.md` for an explicit review/refactoring workflow.
 
-The skill assumes the relevant rule files are also available, especially `clean-code.md`, `generic-product-mindset.md`, and `project-specific.md`.
+The skill assumes the relevant rule files are also available, especially `clean-code.md`, `generic-product-mindset.md`, `project-specific.md`, and `project-development.md`.
 
 ## Precedence
 

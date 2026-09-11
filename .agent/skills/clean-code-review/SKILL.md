@@ -36,14 +36,15 @@ Before reviewing:
 1. Read `.agent/rules/clean-code.md`.
 2. Read `.agent/rules/generic-product-mindset.md`.
 3. Read `.agent/rules/project-specific.md`.
-4. Read any relevant repository rule files:
+4. Read `.agent/rules/project-development.md`.
+5. Read any relevant repository rule files:
    - `.agent/rules/backend.md`
    - `.agent/rules/frontend.md`
    - `.agent/rules/database.md`
    - `.agent/rules/testing.md`
    - `.agent/rules/security.md`
-5. Inspect the target code.
-6. Inspect directly related:
+6. Inspect the target code.
+7. Inspect directly related:
    - callers
    - dependencies
    - DTOs/types
@@ -51,7 +52,7 @@ Before reviewing:
    - tests
    - configuration
    - persistence code
-7. Identify the product capability, workflow, business rules, domain responsibility, delivery-speed constraint, delivery stage, product risk, source of truth, and project-specific constraints before judging structure.
+8. Identify the product capability, workflow, business rules, domain responsibility, delivery-speed constraint, delivery stage, product risk, source of truth, and project-specific constraints before judging structure.
 
 ---
 
